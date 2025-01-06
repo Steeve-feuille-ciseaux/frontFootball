@@ -1,0 +1,224 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f0f0f0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.field-container {
+    position: relative;
+    width: 100%;
+    padding-top: 75%;
+    background: #2a5c2a;
+    border-radius: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.soccer-field {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid white;
+}
+
+.center-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.penalty-area {
+    position: absolute;
+    width: 40%;
+    height: 20%;
+    border: 2px solid white;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.penalty-area-top {
+    top: 0;
+}
+
+.penalty-area-bottom {
+    bottom: 0;
+}
+
+.center-line {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    background: white;
+}
+
+.controls {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.player-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+input, select, button {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background: #0066cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0052a3;
+}
+
+.player {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: move;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    user-select: none;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+.player.Gardien {
+    background: #d97706;
+    border: 2px solid #92400e;
+}
+
+.player.Défenseur {
+    background: #2563eb;
+    border: 2px solid #1e40af;
+}
+
+.player.Milieu {
+    background: #16a34a;
+    border: 2px solid #15803d;
+}
+
+.player.Attaquant {
+    background: #dc2626;
+    border: 2px solid #991b1b;
+}
+
+.player.dragging {
+    opacity: 0.8;
+    z-index: 1000;
+}
+
+.player-name {
+    position: absolute;
+    width: 100px;
+    text-align: center;
+    top: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    pointer-events: none;
+}
+
+.players-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.player-card {
+    padding: 10px;
+    background: #f8f8f8;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-btn {
+    background: #ff4444;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.error-message {
+    color: #ff4444;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.formation-info {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f8f8f8;
+    border-radius: 4px;
+}
+
+.formation-count {
+    display: inline-block;
+    margin-right: 15px;
+    font-size: 14px;
+}
+
+.formation-count.limit-reached {
+    color: #ff4444;
+}
+
+.formation-count.available {
+    color: #22c55e;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.save-btn {
+    background: #16a34a;
+}
+
+.load-btn {
+    background: #6366f1;
+}
+
+.auto-position-btn {
+    background: #8b5cf6;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créateur d'équipe de football</title>
+    <link rel="stylesheet" href="asset/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="controls">
+            <h2>Créateur d'équipe de football</h2>
+            <div class="player-form">
+                <select id="formation" onchange="updateFormation()">
+                    <option value="4-4-2">4-4-2</option>
+                    <option value="4-3-3">4-3-3</option>
+                    <option value="3-5-2">3-5-2</option>
+                    <option value="5-3-2">5-3-2</option>
+                    <option value="4-5-1">4-5-1</option>
+                </select>
+                <input type="text" id="playerName" placeholder="Nom du joueur">
+                <select id="playerPosition">
+                    <option value="Défenseur">Défenseur</option>
+                    <option value="Milieu">Milieu</option>
+                    <option value="Attaquant">Attaquant</option>
+                    <option value="Gardien">Gardien</option>
+                </select>
+                <button onclick="addPlayer()">Ajouter un joueur</button>
+                <div class="action-buttons">
+                    <button class="auto-position-btn" onclick="autoPositionPlayers()">Positionner automatiquement</button>
+                    <button class="save-btn" onclick="saveTeam()">Sauvegarder l'équipe</button>
+                    <button class="load-btn" onclick="loadTeam()">Charger une équipe</button>
+                </div>
+            </div>
+            <div class="formation-info">
+                <div class="formation-count" id="gardienCount">Gardien: 0/1</div>
+                <div class="formation-count" id="defenseurCount">Défenseurs: 0/4</div>
+                <div class="formation-count" id="milieuCount">Milieux: 0/4</div>
+                <div class="formation-count" id="attaquantCount">Attaquants: 0/2</div>
+            </div>
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+
+        <div class="field-container" id="field">
+            <div class="soccer-field">
+                <div class="center-circle"></div>
+                <div class="center-line"></div>
+                <div class="penalty-area penalty-area-top"></div>
+                <div class="penalty-area penalty-area-bottom"></div>
+            </div>
+        </div>
+
+        <div class="players-list" id="playersList"></div>
+    </div>
+    <script src="asset/js/team.js"></script>
+</body>
+</html>
+            

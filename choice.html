@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créateur d'équipe de football</title>
+    <style>
+        /* ... [Styles précédents restent identiques] ... */
+        
+        .error-message {
+            color: #ff4444;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .formation-info {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 4px;
+        }
+
+        .formation-count {
+            display: inline-block;
+            margin-right: 15px;
+            font-size: 14px;
+        }
+
+        .formation-count.limit-reached {
+            color: #ff4444;
+        }
+
+        .formation-count.available {
+            color: #22c55e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="controls">
+            <h2>Créateur d'équipe de football</h2>
+            <div class="player-form">
+                <select id="formation" onchange="updateFormation()">
+                    <option value="4-4-2">4-4-2</option>
+                    <option value="4-3-3">4-3-3</option>
+                    <option value="3-5-2">3-5-2</option>
+                    <option value="5-3-2">5-3-2</option>
+                    <option value="4-5-1">4-5-1</option>
+                </select>
+                <input type="text" id="playerName" placeholder="Nom du joueur">
+                <select id="playerPosition">
+                    <option value="Défenseur">Défenseur</option>
+                    <option value="Milieu">Milieu</option>
+                    <option value="Attaquant">Attaquant</option>
+                    <option value="Gardien">Gardien</option>
+                </select>
+                <button onclick="addPlayer()">Ajouter un joueur</button>
+            </div>
+            <div class="formation-info">
+                <div class="formation-count" id="gardienCount">Gardien: 0/1</div>
+                <div class="formation-count" id="defenseurCount">Défenseurs: 0/4</div>
+                <div class="formation-count" id="milieuCount">Milieux: 0/4</div>
+                <div class="formation-count" id="attaquantCount">Attaquants: 0/2</div>
+            </div>
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+
+        <!-- ... [Reste du HTML identique] ... -->
+    </div>
+
+    <script>
+        let players = [];
+        let draggedPlayer = null;
+        let isDragging = false;
+        let formationLimits = {
+            Gardien: 1,
+            Défenseur: 4,
+            Milieu: 4,
+            Attaquant: 2
+        };
+
+        function updateFormation() {
+            const formation = document.getElementById('formation').value;
+            const [def, mil, att] = formation.split('-').map(Number);
+            
+            formationLimits = {
+                Gardien: 1,
+                Défenseur: def,
+                Milieu: mil,
+                Attaquant: att
+            };
+
+            updatePositionCounts();
+        }
+
+        function getPlayerCountByPosition(position) {
+            return players.filter(player => player.position === position).length;
+        }
+
+        function updatePositionCounts() {
+            const positions = ['Gardien', 'Défenseur', 'Milieu', 'Attaquant'];
+            
+            positions.forEach(position => {
+                const count = getPlayerCountByPosition(position);
+                const limit = formationLimits[position];
+                const element = document.getElementById(`${position.toLowerCase()}Count`);
+                
+                element.textContent = `${position}s: ${count}/${limit}`;
+                element.className = 'formation-count ' + 
+                    (count === limit ? 'limit-reached' : 'available');
+            });
+        }
+
+        function canAddPlayerToPosition(position) {
+            const currentCount = getPlayerCountByPosition(position);
+            return currentCount < formationLimits[position];
+        }
+
+        function addPlayer() {
+            const name = document.getElementById('playerName').value;
+            const position = document.getElementById('playerPosition').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (name.trim() === '') {
+                errorMessage.textContent = 'Veuillez entrer un nom de joueur';
+                return;
+            }
+
+            if (!canAddPlayerToPosition(position)) {
+                errorMessage.textContent = `Nombre maximum de ${position}s atteint pour cette formation`;
+                return;
+            }
+
+            errorMessage.textContent = '';
+
+            const player = {
+                id: Date.now(),
+                name,
+                position,
+                x: 50,
+                y: 50
+            };
+
+            players.push(player);
+            createPlayerElement(player);
+            updatePlayersList();
+            updatePositionCounts();
+
+            document.getElementById('playerName').value = '';
+        }
+
+        function removePlayer(id) {
+            players = players.filter(p => p.id !== id);
+            const playerEl = document.getElementById(`player-${id}`);
+            if (playerEl) playerEl.remove();
+            updatePlayersList();
+            updatePositionCounts();
+        }
+
+        // ... [Reste des fonctions existantes] ...
+
+        // Initialiser les compteurs au chargement
+        updateFormation();
+    </script>
+</body>
+</html>
